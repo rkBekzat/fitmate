@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   List<Widget> pages = [
     home(),
     about(),
-    scanner(),
+    BarcodeScannerWidget(),
   ];
 
   int index = 0;
