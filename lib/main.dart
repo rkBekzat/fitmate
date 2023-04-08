@@ -1,3 +1,5 @@
+import 'package:fitmate/bloc/api/api_bloc.dart';
+import 'package:fitmate/bloc/barcode/barcode_bloc.dart';
 import 'package:fitmate/bloc/internet/internet_cubit.dart';
 import 'package:fitmate/screen/about.dart';
 import 'package:fitmate/screen/home.dart';
@@ -44,8 +46,18 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: BlocProvider<InternetCubit>(
-          create: (_) => InternetCubit(),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<InternetCubit>(
+              create: (_) => InternetCubit(),
+            ),
+            BlocProvider<BarcodeBloc>(
+              create: (context) => BarcodeBloc(),
+            ),
+            BlocProvider<ApiBloc>(
+                create: (context) => ApiBloc(),
+            ),
+          ],
           child: Scaffold(
             appBar: AppBar(
               title: Text("Fitmate"),

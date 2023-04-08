@@ -1,3 +1,4 @@
+import 'package:fitmate/bloc/api/api_bloc.dart';
 import 'package:fitmate/bloc/internet/internet_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,10 +24,24 @@ class home extends StatelessWidget {
           if(state is ConnectedState) {
             return Text("Home page");
           } else {
-            return Text('Internet not connected');
+            return BlocBuilder<ApiBloc, ApiState>(
+                builder: (context, state) {
+                  if(state is ApiInitial){
+                    late final products;
+                    state.products.then((value) => products=value);
+                    return ListView.builder(
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          return Text(products[index]);
+                        });
+                  }
+                  return Text('None');
+                });
           }
         },
       ),
     );
   }
+
+
 }
