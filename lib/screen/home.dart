@@ -27,12 +27,26 @@ class home extends StatelessWidget {
             return BlocBuilder<ApiBloc, ApiState>(
                 builder: (context, state) {
                   if(state is ApiInitial){
-                    late final products;
-                    state.products.then((value) => products=value);
-                    return ListView.builder(
-                        itemCount: products.length,
-                        itemBuilder: (context, index) {
-                          return Text(products[index]);
+                    late final products = state.products;
+                    return FutureBuilder(
+                        future:  products,
+                        builder:  (context, snapshot) {
+                          if(snapshot.hasData) {
+                            final listProduct = snapshot.data;
+                            if(listProduct != null) {
+                              return ListView.builder(
+                                  itemCount: listProduct.length,
+                                  itemBuilder: (context, index) {
+                                    if(listProduct[index].productName != null) {
+                                      return Text(listProduct[index].productName!);
+                                    }
+                                    return const Text("Next");
+                                  });
+                            }
+                          } else if(snapshot.hasError){
+                            return Text('ERROR: ${snapshot.error}');
+                          }
+                          return Text("wait");
                         });
                   }
                   return Text('None');
@@ -42,6 +56,4 @@ class home extends StatelessWidget {
       ),
     );
   }
-
-
 }
