@@ -9,7 +9,6 @@ import 'package:openfoodfacts/utils/PnnsGroups.dart';
 
 /// request a product from the OpenFoodFacts database using BarCode
 Future<Product?> getProductByBarcode(String barCode) async {
-
   final ProductQueryConfiguration configuration = ProductQueryConfiguration(
     barCode,
     language: OpenFoodFactsLanguage.RUSSIAN,
@@ -26,20 +25,20 @@ Future<Product?> getProductByBarcode(String barCode) async {
   }
 }
 
-
 /// request a list of products from the OpenFoodFacts database
 Future<List<ProductData>> getProducts() async {
   List<ProductData> list = [];
 
-  ProductSearchQueryConfiguration configuration = 
-    ProductSearchQueryConfiguration(
-      parametersList: <Parameter>[
-        const PnnsGroup2Filter(pnnsGroup2: PnnsGroup2.CHOCOLATE_PRODUCTS),
-        const PageSize(size: 15),
-      ]
-    );
-  
-  SearchResult result = await OpenFoodAPIClient.searchProducts(null, configuration,);
+  ProductSearchQueryConfiguration configuration =
+      ProductSearchQueryConfiguration(parametersList: <Parameter>[
+    const PnnsGroup2Filter(pnnsGroup2: PnnsGroup2.CHOCOLATE_PRODUCTS),
+    const PageSize(size: 15),
+  ]);
+
+  SearchResult result = await OpenFoodAPIClient.searchProducts(
+    null,
+    configuration,
+  );
 
   var products = result.products;
   products ??= [];
@@ -48,14 +47,12 @@ Future<List<ProductData>> getProducts() async {
     nutr ??= Nutriments.empty();
     final nutrList = nutr.toData();
     var nutrimentsData = <NutrimentsData>[];
-    
+
     for (final entry in nutrList.entries) {
-      nutrimentsData.add(
-        NutrimentsData(
-          type: entry.key,
-          quantity: entry.value,
-        )
-      );
+      nutrimentsData.add(NutrimentsData(
+        type: entry.key,
+        quantity: entry.value,
+      ));
     }
 
     var ingredients = <String?>[];
@@ -65,14 +62,12 @@ Future<List<ProductData>> getProducts() async {
       ingredients.add(ingr.text);
     }
 
-    list.add(
-      ProductData(
-        productName: product.productName,
-        productImage: product.imageFrontUrl,
-        ingredients: ingredients,
-        nutriments: nutrimentsData,
-      )
-    );
+    list.add(ProductData(
+      productName: product.productName,
+      productImage: product.imageFrontUrl,
+      ingredients: ingredients,
+      nutriments: nutrimentsData,
+    ));
   }
   return list;
 }

@@ -6,20 +6,16 @@ import 'package:fitmate/screen/scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp
-
-  ({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
 
 class _MyAppState extends State<MyApp> {
   List<Widget> pages = [
@@ -55,7 +51,7 @@ class _MyAppState extends State<MyApp> {
               create: (context) => BarcodeBloc(),
             ),
             BlocProvider<ApiBloc>(
-                create: (context) => ApiBloc(),
+              create: (context) => ApiBloc(),
             ),
           ],
           child: Scaffold(
@@ -66,20 +62,15 @@ class _MyAppState extends State<MyApp> {
             bottomNavigationBar: BottomNavigationBar(
               items: const [
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.home_max_outlined),
-                    label: 'home'
-                ),
+                    icon: Icon(Icons.home_max_outlined), label: 'home'),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.camera_alt_outlined),
-                    label: 'scanner'
-                ),
+                    icon: Icon(Icons.camera_alt_outlined), label: 'scanner'),
               ],
               currentIndex: index,
               selectedItemColor: Colors.blue,
               onTap: choose,
             ),
           ),
-        )
-    );
+        ));
   }
 }

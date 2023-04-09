@@ -41,7 +41,6 @@ class ProductAbout extends StatelessWidget {
                 'Product Details:',
                 style: TextStyle(fontSize: 18),
               ),
-
               const SizedBox(height: 8),
               Container(
                 decoration: BoxDecoration(
@@ -69,7 +68,6 @@ class ProductAbout extends StatelessWidget {
                   ],
                 ),
               ),
-
               const SizedBox(height: 16),
               Container(
                 decoration: BoxDecoration(

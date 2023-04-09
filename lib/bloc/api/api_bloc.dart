@@ -12,15 +12,9 @@ part 'api_state.dart';
 class ApiBloc extends Bloc<ApiEvent, ApiState> {
   ApiBloc() : super(ApiInitial(products: getProducts())) {
     on<AllProductsApiEvent>(_getAll);
-
   }
 
-  _getAll(AllProductsApiEvent event, Emitter<ApiState> emit){
+  _getAll(AllProductsApiEvent event, Emitter<ApiState> emit) {
     emit(ApiInitial(products: getProducts()));
   }
-
-
-
-
-
 }
