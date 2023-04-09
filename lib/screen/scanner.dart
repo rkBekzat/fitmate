@@ -1,5 +1,8 @@
+import 'package:fitmate/bloc/barcode/barcode_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openfoodfacts/model/Product.dart';
 
 class BarcodeScannerWidget extends StatefulWidget {
   const BarcodeScannerWidget({Key? key}) : super(key: key);
@@ -29,6 +32,8 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
     _newScanWidth = screenWidth * 0.60;
     _newScanHeight = _newScanWidth * 0.65;
 
+    return BlocBuilder<BarcodeBloc, BarcodeState>(
+  builder: (context, state) {
     return Container(
       margin: EdgeInsets.fromLTRB(0, screenHeight * 0.15, 0, 0),
       child: Column(
@@ -38,7 +43,9 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
               width: _newScanWidth,
               height: _newScanHeight,
               child: ElevatedButton(
-                onPressed: _scanBarcode,
+                onPressed: () {
+                  BlocProvider.of<BarcodeBloc>(context).add(ScanBarcodeEvent());
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       const Color.fromARGB(255, 125, 122, 219)),
@@ -58,9 +65,9 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
               ),
             ),
           ),
-          _barcodeValue.length <= 3
-              ? Container()
-              : Container(
+
+          state is GetBarcodeState
+              ?  Container(
                   width: _newScanWidth,
                   height: _newScanWidth,
                   decoration: BoxDecoration(
@@ -73,7 +80,7 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                     children: [
                       FittedBox(
                         child: Text(
-                          _barcodeValue,
+                          state.barcode,
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 200,
@@ -83,17 +90,29 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      const FittedBox(
-                        child: Text(
-                          'Чай зел. Lipton',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 200,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      FittedBox(
+                        child: FutureBuilder<Product?>(
+                          future: state.product,
+                          builder: (context, snapshot) {
+                            if(snapshot.hasData){
+                                  return Text(
+                                    snapshot.data?.productName ?? "No name",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 200,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                            } else if(snapshot.hasError) {
+                              return Text(
+                                "Errors: ${snapshot.error}"
+                              );
+                            }
+                            return const CircularProgressIndicator();
+                          }),
                       ),
+
                       const SizedBox(height: 15),
                       Expanded(
                         child: ElevatedButton(
@@ -123,9 +142,12 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                       ),
                     ],
                   ),
-                ),
+                )
+          : Container(),
         ],
       ),
     );
+  },
+);
   }
 }

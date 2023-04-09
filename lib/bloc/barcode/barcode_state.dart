@@ -7,7 +7,7 @@ class BarcodeInitial extends BarcodeState {}
 
 class GetBarcodeState extends BarcodeState {
   final Future<Product?> product;
+  final String barcode;
 
-  GetBarcodeState({required this.product});
-
+  GetBarcodeState({required this.product, required this.barcode});
 }
