@@ -1,4 +1,3 @@
-import 'package:fitmate/api.dart';
 import 'package:fitmate/util/home_item.dart';
 import 'package:fitmate/util/product_about.dart';
 import 'package:fitmate/bloc/api/api_bloc.dart';
@@ -18,7 +17,7 @@ class Home extends StatelessWidget {
         listener: (context, state) {
           if (state is NotConnectedState) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text('Internet not connected'),
                 backgroundColor: Colors.red,
               ),
@@ -33,7 +32,7 @@ class Home extends StatelessWidget {
                   if(state is ApiInitial){
                     late final products = state.products;
                     return FutureBuilder<List<ProductData>>(
-                    future: getProducts(),
+                    future: products,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         final futureProducts = snapshot.data!;
@@ -67,24 +66,25 @@ class Home extends StatelessWidget {
                       } else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       }
-
                       return const CircularProgressIndicator();
                     },
                     );
                   }
-                  return Text('None');
-                }); 
+                  return const Center(child: Text('None'));
+                })
             );
           } else {
-            return  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.network_check),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Internet not connected"),
-              ],
+            return  Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.network_check),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Internet not connected"),
+                ],
+              ),
             );
           }
         },
