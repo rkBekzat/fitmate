@@ -8,3 +8,11 @@ We have bloc for api, barcode and internet.
 - Internet bloc - check if the internet is available using lib connectivity plus. Here we have two state connected and not connected
 - Api bloc - return the product. Here we have one event AllProductsApiEvent which return all products. In futher we will add the event such as choose, filter and search events.  
 - Barcode bloc - responsible for scanning the barcode and filtering products using the barcode. 
+
+
+## Images 
+
+
+|                   All products                           |                        Specific product              |                       scanner page                   |    Camera                    |   App icon
+|:-------------------------------------------------:|:----------------------------------------------:|:----------------------------------------------:|:----------------------------------:|:------------------------------------------------:
+| <img src="assets/demo/first.jpg" alt="Scrolling"> | <img src="assets/demo/second.jpg" alt="page">  | <img src="assets/demo/third.jpg" alt="dailog"> | <img src="assets/demo/fourth.jpg"> | <img src="assets/demo/fifth.jpg" >
