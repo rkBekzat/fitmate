@@ -1,6 +1,5 @@
 import 'package:fitmate/bloc/barcode/barcode_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openfoodfacts/model/Product.dart';
 
@@ -12,17 +11,8 @@ class BarcodeScannerWidget extends StatefulWidget {
 }
 
 class _BarcodeScannerState extends State<BarcodeScannerWidget> {
-  String _barcodeValue = '';
   double _newScanWidth = 0, _newScanHeight = 0;
 
-  Future<void> _scanBarcode() async {
-    final barcodeValue = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-
-    setState(() {
-      _barcodeValue = barcodeValue;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +88,7 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                                   return Text(
                                     snapshot.data?.productName ?? "No name",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 200,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -118,7 +108,7 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                         child: ElevatedButton(
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                Color.fromARGB(255, 229, 183, 97)),
+                                const Color.fromARGB(255, 229, 183, 97)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
