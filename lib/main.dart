@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -24,9 +24,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<Widget> pages = [
-    home(),
-    about(),
-    BarcodeScannerWidget(),
+    const Home(),
+    // const about(),
+    const BarcodeScannerWidget(),
   ];
 
   int index = 0;
@@ -68,10 +68,6 @@ class _MyAppState extends State<MyApp> {
                 BottomNavigationBarItem(
                     icon: Icon(Icons.home_max_outlined),
                     label: 'home'
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.info_outline),
-                  label: 'about',
                 ),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.camera_alt_outlined),
