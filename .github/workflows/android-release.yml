@@ -1,0 +1,74 @@
+name: Android Release Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: "18.0.2+1"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.7.6"
+          channel: 'stable'
+      
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Check if code is formatted
+        run: flutter format lib --set-exit-if-changed
+
+      - name: Linter checks
+        run: flutter analyze
+ 
+      # - name: Run unit tests
+        # run: TODO  
+
+      - name: Build release
+        run: flutter build apk --release
+
+      - name: Declare release variables
+        id: vars
+        shell: bash
+        run: |
+          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 0.1.0+${{ steps.vars.outputs.sha_short }}
+          release_name: Build ${{ steps.vars.outputs.sha_short }}
+          draft: false
+          prerelease: false
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: fitmate_0.1.0+${{ steps.vars.outputs.sha_short }}.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Attach artifact to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/app/outputs/flutter-apk/app-release.apk
+          asset_name: fitmate_0.1.0+${{ steps.vars.outputs.sha_short }}.apk
+          asset_content_type: application/vnd.android.package-archive
