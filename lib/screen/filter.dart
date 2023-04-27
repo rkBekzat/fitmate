@@ -79,6 +79,11 @@ class _FilterPageState extends State<FilterPage> {
                 Text("${proteinValues.start.round()} - ${proteinValues.end.round()}  g")
               ],
             ),
+            SizedBox(height: 25,),
+            ElevatedButton(
+                onPressed: () {Navigator.pop(context);},
+                child: Text("Done")
+            )
           ],
         ),
       ),

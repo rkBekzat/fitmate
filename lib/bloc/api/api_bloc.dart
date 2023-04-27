@@ -13,6 +13,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
   ApiBloc() : super(ApiInitial(products: getProducts())) {
     on<AllProductsApiEvent>(_getAll);
     on<SearchProductAPIEvent>(_search);
+    on<FilterProductAPIEvent>(_filtering);
   }
 
   _getAll(AllProductsApiEvent event, Emitter<ApiState> emit) {
@@ -22,5 +23,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
   _search(SearchProductAPIEvent event, Emitter<ApiState> emit){
 
   }
+  _filtering(FilterProductAPIEvent event, Emitter<ApiState> emit) {
 
+  }
 }

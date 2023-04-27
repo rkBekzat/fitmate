@@ -10,3 +10,7 @@ class SearchProductAPIEvent extends ApiEvent{
 
   SearchProductAPIEvent({required this.title});
 }
+
+class FilterProductAPIEvent extends ApiEvent {
+
+}
