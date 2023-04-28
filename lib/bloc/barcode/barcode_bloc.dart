@@ -5,7 +5,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../api/api.dart';
-import 'package:openfoodfacts/model/Product.dart';
+import '../../models/product_data.dart';
 
 part 'barcode_event.dart';
 part 'barcode_state.dart';
