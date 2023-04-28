@@ -13,35 +13,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          // Add a search bar with a text field and a button
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  // Open a filter page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FilterPage()),
-                  );
-                },
-                child: Text('Filters'),
-              ),
-            ],
-          ),
-          // Wrap the existing code with a BlocConsumer
-          BlocConsumer<InternetCubit, InternetState>(
+    return  BlocConsumer<InternetCubit, InternetState>(
             listener: (context, state) {
               if (state is NotConnectedState) {
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -119,10 +91,8 @@ class Home extends StatelessWidget {
                 );
               }
             },
-          ),
-        ],
-      ),
-    );
+
+      );
   }
 
 
