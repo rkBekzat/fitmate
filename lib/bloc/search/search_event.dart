@@ -1,7 +1,6 @@
 part of 'search_bloc.dart';
 
-abstract class SearchEvent {
-}
+abstract class SearchEvent {}
 
 class EmptySearchEvent extends SearchEvent {}
 

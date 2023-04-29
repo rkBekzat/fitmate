@@ -5,6 +5,4 @@ abstract class ApiEvent {}
 
 class AllProductsApiEvent extends ApiEvent {}
 
-class FilterProductAPIEvent extends ApiEvent {
-
-}
+class FilterProductAPIEvent extends ApiEvent {}

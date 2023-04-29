@@ -10,7 +10,6 @@ class _FilterPageState extends State<FilterPage> {
   RangeValues sugarValues = RangeValues(0, 500);
   RangeValues proteinValues = RangeValues(0, 500);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,30 +25,46 @@ class _FilterPageState extends State<FilterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {sortType = 1; setState(() {});},
+                  onPressed: () {
+                    sortType = 1;
+                    setState(() {});
+                  },
                   child: Text("Relevent"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: sortType == 1 ? Colors.blue : Colors.grey,
                   ),
                 ),
-                SizedBox(width: 15,),
+                SizedBox(
+                  width: 15,
+                ),
                 ElevatedButton(
-                    onPressed: () {sortType = 2; setState(() {});},
-                    child: Text("Ascending order"),
-                    style: ElevatedButton.styleFrom(
+                  onPressed: () {
+                    sortType = 2;
+                    setState(() {});
+                  },
+                  child: Text("Ascending order"),
+                  style: ElevatedButton.styleFrom(
                     backgroundColor: sortType == 2 ? Colors.blue : Colors.grey,
                   ),
                 ),
-                SizedBox(width: 15,),
+                SizedBox(
+                  width: 15,
+                ),
                 ElevatedButton(
-                    onPressed: () {sortType = 3; setState(() {});},
-                    child: Text("descending order"),
-                    style: ElevatedButton.styleFrom(
+                  onPressed: () {
+                    sortType = 3;
+                    setState(() {});
+                  },
+                  child: Text("descending order"),
+                  style: ElevatedButton.styleFrom(
                     backgroundColor: sortType == 3 ? Colors.blue : Colors.grey,
-                ),),
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             Text("Filtering"),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -60,9 +75,10 @@ class _FilterPageState extends State<FilterPage> {
                     min: 0,
                     max: 1000,
                     onChanged: (value) => setState(() {
-                      this.sugarValues = value;
-                    })),
-                Text("${sugarValues.start.round()} - ${sugarValues.end.round()} g")
+                          this.sugarValues = value;
+                        })),
+                Text(
+                    "${sugarValues.start.round()} - ${sugarValues.end.round()} g")
               ],
             ),
             Row(
@@ -74,16 +90,20 @@ class _FilterPageState extends State<FilterPage> {
                     min: 0,
                     max: 1000,
                     onChanged: (value) => setState(() {
-                      this.proteinValues = value;
-                    })),
-                Text("${proteinValues.start.round()} - ${proteinValues.end.round()}  g")
+                          this.proteinValues = value;
+                        })),
+                Text(
+                    "${proteinValues.start.round()} - ${proteinValues.end.round()}  g")
               ],
             ),
-            SizedBox(height: 25,),
+            SizedBox(
+              height: 25,
+            ),
             ElevatedButton(
-                onPressed: () {Navigator.pop(context);},
-                child: Text("Done")
-            )
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Done"))
           ],
         ),
       ),

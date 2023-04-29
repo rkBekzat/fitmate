@@ -16,7 +16,7 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
   }
 
   _getAll(AllProductsApiEvent event, Emitter<ApiState> emit) {
-    if(state.activeFilter) {
+    if (state.activeFilter) {
       emit(ApiInitial(products: getProducts()));
     }
     state.activeFilter = false;
