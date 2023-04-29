@@ -56,7 +56,8 @@ class _ScreensState extends State<Screens> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const FilterPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const FilterPage()),
                         );
                       },
                       // ignore: prefer_const_constructors

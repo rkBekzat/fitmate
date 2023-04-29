@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../util/product_about.dart';
 
-
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
@@ -57,19 +56,19 @@ class _SearchPageState extends State<SearchPage> {
                 final product = products[index];
                 if (product.productName != null) {
                   return ListTile(
-                      title: Text(product.productName!),
-                      onTap: () {
-                        showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context,
-                          backgroundColor: Colors.transparent,
-                          builder: (BuildContext context) {
-                            return ProductAbout(
-                              productData: product,
-                            );
-                          },
-                        );
-                      },
+                    title: Text(product.productName!),
+                    onTap: () {
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        builder: (BuildContext context) {
+                          return ProductAbout(
+                            productData: product,
+                          );
+                        },
+                      );
+                    },
                   );
                 }
                 return const Text("Data is null");
