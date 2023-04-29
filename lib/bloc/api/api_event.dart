@@ -4,3 +4,5 @@ part of 'api_bloc.dart';
 abstract class ApiEvent {}
 
 class AllProductsApiEvent extends ApiEvent {}
+
+class FilterProductAPIEvent extends ApiEvent {}
