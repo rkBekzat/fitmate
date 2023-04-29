@@ -1,3 +1,4 @@
+import 'package:fitmate/bloc/search/search_bloc.dart';
 import 'package:fitmate/screen/scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:fitmate/screen/search.dart';
@@ -45,8 +46,8 @@ class _ScreensState extends State<Screens> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>
-                            BlocProvider<ApiBloc>(
-                              create: (context) => ApiBloc(),
+                            BlocProvider<SearchBloc>(
+                              create: (context) => SearchBloc(),
                               child: SearchPage(),
                             )),
                       );

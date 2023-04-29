@@ -1,3 +1,4 @@
+import 'package:fitmate/bloc/search/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +15,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -28,8 +30,8 @@ class _SearchPageState extends State<SearchPage> {
                 child: TextField(
                   controller: _searchController,
                   onChanged: (value) {
-                        final searchBloc = context.read<ApiBloc>();
-                        searchBloc.add(SearchProductAPIEvent(title: value));
+                        final searchBloc = context.read<SearchBloc>();
+                        searchBloc.add(SearchProductEvent(name: value));
 
                   },
                   decoration: InputDecoration(
@@ -39,6 +41,8 @@ class _SearchPageState extends State<SearchPage> {
                         onPressed: () {
                           /* Clear the search field */
                           _searchController.clear();
+                          final searchBloc = context.read<SearchBloc>();
+                          searchBloc.add(EmptySearchEvent());
                         },
                       ),
                       hintText: 'Search...',
@@ -46,20 +50,13 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
             )),
-        body: BlocBuilder<ApiBloc, ApiState>(
+        body: BlocBuilder<SearchBloc, SearchState>(
             builder: (context, state) {
-              if (state is ApiInitial) {
-                final products = state.products;
-                return FutureBuilder<List<ProductData>>(
-                    future: products,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        print("Products: ${snapshot.data!.length}  Text:${_searchController.value.text}\n");
-                        final _data = snapshot.data!;
-                        return ListView.builder(
-                          itemCount: _data?.length,
+                final products = state.searched;
+                return ListView.builder(
+                          itemCount: products.length,
                             itemBuilder: (context, index) {
-                            final product = _data[index];
+                            final product = products[index];
                               if(product.productName != null) {
                                 return ListTile(title: Text(
                                     product.productName!));
@@ -67,14 +64,8 @@ class _SearchPageState extends State<SearchPage> {
                               return Text("Data is null");
                             }
                         );
-                      } else if(snapshot.hasError){
-                        return Text("The errors: ${snapshot.error.toString()}");
                       }
-                      return Text("Data not ready");
-                    });
-              }
-              return Text("Different state");
-            }),
-    );
+                      )
+                    );
   }
 }
