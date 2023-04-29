@@ -2,13 +2,12 @@ import 'package:fitmate/bloc/search/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/api/api_bloc.dart';
-import '../models/product_data.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _SearchPageState createState() => _SearchPageState();
 }
 
@@ -57,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
                 if (product.productName != null) {
                   return ListTile(title: Text(product.productName!));
                 }
-                return Text("Data is null");
+                return const Text("Data is null");
               });
         }));
   }

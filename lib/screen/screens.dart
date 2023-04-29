@@ -5,13 +5,13 @@ import 'package:fitmate/screen/search.dart';
 import 'package:fitmate/screen/filter.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/api/api_bloc.dart';
 import 'home.dart';
 
 class Screens extends StatefulWidget {
   const Screens({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _ScreensState createState() => _ScreensState();
 }
 
@@ -39,29 +39,29 @@ class _ScreensState extends State<Screens> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        final searchBloc = context.read<ApiBloc>();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => BlocProvider<SearchBloc>(
                                     create: (context) => SearchBloc(),
-                                    child: SearchPage(),
+                                    child: const SearchPage(),
                                   )),
                         );
                       },
-                      icon: Icon(Icons.search)),
-                  SizedBox(
+                      icon: const Icon(Icons.search)),
+                  const SizedBox(
                     width: 15,
                   ),
                   IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => FilterPage()),
+                          MaterialPageRoute(builder: (context) => const FilterPage()),
                         );
                       },
+                      // ignore: prefer_const_constructors
                       icon: Icon(Icons.filter_alt_outlined)),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   )
                 ],

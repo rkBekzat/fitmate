@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 
 class FilterPage extends StatefulWidget {
+  const FilterPage({super.key});
+
   @override
   State<FilterPage> createState() => _FilterPageState();
 }
 
 class _FilterPageState extends State<FilterPage> {
   int sortType = 0;
-  RangeValues sugarValues = RangeValues(0, 500);
-  RangeValues proteinValues = RangeValues(0, 500);
+  RangeValues sugarValues = const RangeValues(0, 500);
+  RangeValues proteinValues = const RangeValues(0, 500);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filter"),
+        title: const Text("Filter"),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Sorting"),
+            const Text("Sorting"),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -29,12 +31,12 @@ class _FilterPageState extends State<FilterPage> {
                     sortType = 1;
                     setState(() {});
                   },
-                  child: Text("Relevent"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: sortType == 1 ? Colors.blue : Colors.grey,
                   ),
+                  child: const Text("Relevent"),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
@@ -42,12 +44,12 @@ class _FilterPageState extends State<FilterPage> {
                     sortType = 2;
                     setState(() {});
                   },
-                  child: Text("Ascending order"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: sortType == 2 ? Colors.blue : Colors.grey,
                   ),
+                  child: const Text("Ascending order"),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 ElevatedButton(
@@ -55,27 +57,27 @@ class _FilterPageState extends State<FilterPage> {
                     sortType = 3;
                     setState(() {});
                   },
-                  child: Text("descending order"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: sortType == 3 ? Colors.blue : Colors.grey,
                   ),
+                  child: const Text("descending order"),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text("Filtering"),
+            const Text("Filtering"),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Sugar"),
+                const Text("Sugar"),
                 RangeSlider(
                     values: sugarValues,
                     min: 0,
                     max: 1000,
                     onChanged: (value) => setState(() {
-                          this.sugarValues = value;
+                          sugarValues = value;
                         })),
                 Text(
                     "${sugarValues.start.round()} - ${sugarValues.end.round()} g")
@@ -84,26 +86,26 @@ class _FilterPageState extends State<FilterPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Protein"),
+                const Text("Protein"),
                 RangeSlider(
                     values: proteinValues,
                     min: 0,
                     max: 1000,
                     onChanged: (value) => setState(() {
-                          this.proteinValues = value;
+                          proteinValues = value;
                         })),
                 Text(
                     "${proteinValues.start.round()} - ${proteinValues.end.round()}  g")
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Done"))
+                child: const Text("Done"))
           ],
         ),
       ),

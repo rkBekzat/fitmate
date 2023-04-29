@@ -1,6 +1,5 @@
 part of 'api_bloc.dart';
 
-@immutable
 abstract class ApiState {
   bool activeFilter = false;
 }
