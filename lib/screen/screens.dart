@@ -2,8 +2,10 @@ import 'package:fitmate/screen/scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:fitmate/screen/search.dart';
 import 'package:fitmate/screen/filter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
+import '../bloc/api/api_bloc.dart';
 import 'home.dart';
 
 class Screens extends StatefulWidget {
@@ -38,10 +40,15 @@ class _ScreensState extends State<Screens> {
             index == 0 ? Row(
               children: [
                 IconButton(
-                    onPressed: (){
+                    onPressed: () {
+                      final searchBloc = context.read<ApiBloc>();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SearchPage()),
+                        MaterialPageRoute(builder: (context) =>
+                            BlocProvider<ApiBloc>(
+                              create: (context) => ApiBloc(),
+                              child: SearchPage(),
+                            )),
                       );
                     },
                     icon: Icon(Icons.search)),
