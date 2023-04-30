@@ -94,7 +94,15 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                                       ),
                                     );
                                   } else if (snapshot.hasError) {
-                                    return Text("Errors: ${snapshot.error}");
+                                    return const Text(
+                                      "Product not found",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 200,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
                                   }
                                   return const CircularProgressIndicator();
                                 }),
