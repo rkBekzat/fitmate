@@ -54,7 +54,12 @@ Future<ProductData?> getProductByBarcode(String barCode) async {
       nutriments: nutrimentsData,
     );
   } else {
-    return null;
+    return ProductData(
+      productName: "((product not found))",
+      productImage: "",
+      ingredients: [],
+      nutriments: [],
+    );
   }
 }
 
