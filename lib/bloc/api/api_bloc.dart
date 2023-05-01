@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,9 +11,17 @@ part 'api_state.dart';
 class ApiBloc extends Bloc<ApiEvent, ApiState> {
   ApiBloc() : super(ApiInitial(products: getProducts())) {
     on<AllProductsApiEvent>(_getAll);
+    on<FilterProductAPIEvent>(_filtering);
   }
 
   _getAll(AllProductsApiEvent event, Emitter<ApiState> emit) {
-    emit(ApiInitial(products: getProducts()));
+    if (state.activeFilter) {
+      emit(ApiInitial(products: getProducts()));
+    }
+    state.activeFilter = false;
+  }
+
+  _filtering(FilterProductAPIEvent event, Emitter<ApiState> emit) {
+    state.activeFilter = true;
   }
 }
