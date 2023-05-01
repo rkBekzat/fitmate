@@ -31,21 +31,24 @@ class Home extends StatelessWidget {
                 if (state is ApiInitial) {
                   return listProduct(state.products, false);
                 }
-                if(state is FilterApiStat){
+                if (state is FilterApiStat) {
                   return SingleChildScrollView(
                     child: Column(
                       children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              final apiBloc = context.read<ApiBloc>();
-                              apiBloc.add(AllProductsApiEvent());
-                            },
-                            child: Row(
-                              children: [
-                                Text("Filter"),
-                                Icon(Icons.delete_forever),
-                              ],
-                            )),
+                        SizedBox(
+                          width: 90,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                final apiBloc = context.read<ApiBloc>();
+                                apiBloc.add(AllProductsApiEvent());
+                              },
+                              child: Row(
+                                children: const [
+                                  Text("Filter"),
+                                  Icon(Icons.delete_forever),
+                                ],
+                              )),
+                        ),
                         listProduct(state.products, true),
                       ],
                     ),
@@ -71,20 +74,21 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget listProduct(Future<List<ProductData>> products, bool filter){
+  Widget listProduct(Future<List<ProductData>> products, bool filter) {
     return FutureBuilder<List<ProductData>>(
       future: products,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final futureProducts = snapshot.data!;
           return GridView.builder(
-            gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               crossAxisSpacing: 10.0,
               mainAxisSpacing: 10.0,
             ),
-            physics: filter ? NeverScrollableScrollPhysics() : ScrollPhysics() ,
+            physics: filter
+                ? const NeverScrollableScrollPhysics()
+                : const ScrollPhysics(),
             shrinkWrap: true,
             itemCount: futureProducts.length,
             itemBuilder: (context, index) {
@@ -116,5 +120,4 @@ class Home extends StatelessWidget {
       },
     );
   }
-
 }

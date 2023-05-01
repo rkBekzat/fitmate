@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,8 +36,8 @@ class _FilterPageState extends State<FilterPage> {
                     min: 0,
                     max: 1000,
                     onChanged: (value) => setState(() {
-                      sugarValues = value;
-                    })),
+                          sugarValues = value;
+                        })),
                 Text(
                     "${sugarValues.start.round()} - ${sugarValues.end.round()} g")
               ],
@@ -52,15 +51,14 @@ class _FilterPageState extends State<FilterPage> {
                     min: 0,
                     max: 1000,
                     onChanged: (value) => setState(() {
-                      proteinValues = value;
-                    })),
+                          proteinValues = value;
+                        })),
                 Text(
                     "${proteinValues.start.round()} - ${proteinValues.end.round()}  g")
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
               children: [
                 const Text("Fat"),
                 RangeSlider(
@@ -68,10 +66,9 @@ class _FilterPageState extends State<FilterPage> {
                     min: 0,
                     max: 1000,
                     onChanged: (value) => setState(() {
-                      fatValues = value;
-                    })),
-                Text(
-                    "${fatValues.start.round()} - ${fatValues.end.round()}  g")
+                          fatValues = value;
+                        })),
+                Text("${fatValues.start.round()} - ${fatValues.end.round()}  g")
               ],
             ),
             Row(
@@ -83,8 +80,8 @@ class _FilterPageState extends State<FilterPage> {
                     min: 0,
                     max: 1000,
                     onChanged: (value) => setState(() {
-                      carboValues = value;
-                    })),
+                          carboValues = value;
+                        })),
                 Text(
                     "${carboValues.start.round()} - ${carboValues.end.round()}  g")
               ],
@@ -95,17 +92,17 @@ class _FilterPageState extends State<FilterPage> {
             ElevatedButton(
                 onPressed: () {
                   final filterBloc = context.read<ApiBloc>();
-                  filterBloc.add(FilterProductAPIEvent(sugarValues: sugarValues, proteinValues: proteinValues, carboValues: carboValues, fatValues: fatValues));
+                  filterBloc.add(FilterProductAPIEvent(
+                      sugarValues: sugarValues,
+                      proteinValues: proteinValues,
+                      carboValues: carboValues,
+                      fatValues: fatValues));
                   Navigator.pop(context);
                 },
                 child: const Text("Done"))
           ],
         ),
       ),
-
     );
   }
-
-
-
 }
