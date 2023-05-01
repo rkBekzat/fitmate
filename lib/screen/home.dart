@@ -29,7 +29,7 @@ class Home extends StatelessWidget {
             child: BlocBuilder<ApiBloc, ApiState>(
               builder: (context, state) {
                 if (state is ApiInitial) {
-                  return listProduct(state.products);
+                  return listProduct(state.products, false);
                 }
                 if(state is FilterApiStat){
                   return SingleChildScrollView(
@@ -46,7 +46,7 @@ class Home extends StatelessWidget {
                                 Icon(Icons.delete_forever),
                               ],
                             )),
-                        listProduct(state.products),
+                        listProduct(state.products, true),
                       ],
                     ),
                   );
@@ -71,7 +71,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget listProduct(Future<List<ProductData>> products){
+  Widget listProduct(Future<List<ProductData>> products, bool filter){
     return FutureBuilder<List<ProductData>>(
       future: products,
       builder: (context, snapshot) {
@@ -84,6 +84,7 @@ class Home extends StatelessWidget {
               crossAxisSpacing: 10.0,
               mainAxisSpacing: 10.0,
             ),
+            physics: filter ? NeverScrollableScrollPhysics() : ScrollPhysics() ,
             shrinkWrap: true,
             itemCount: futureProducts.length,
             itemBuilder: (context, index) {
