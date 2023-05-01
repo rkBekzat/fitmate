@@ -2,6 +2,7 @@ import 'package:fitmate/bloc/barcode/barcode_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fitmate/models/product_data.dart';
+import 'package:fitmate/util/product_about.dart';
 
 class BarcodeScannerWidget extends StatefulWidget {
   const BarcodeScannerWidget({Key? key}) : super(key: key);
@@ -12,6 +13,8 @@ class BarcodeScannerWidget extends StatefulWidget {
 
 class _BarcodeScannerState extends State<BarcodeScannerWidget> {
   double _newScanWidth = 0, _newScanHeight = 0;
+
+  ProductData? product;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +86,10 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                             child: FutureBuilder<ProductData?>(
                                 future: state.product,
                                 builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
+                                  product = snapshot.data;
+                                  if (snapshot.hasData &&
+                                      product?.productName !=
+                                          "((product not found))") {
                                     return Text(
                                       snapshot.data?.productName ?? "No name",
                                       textAlign: TextAlign.center,
@@ -93,7 +99,9 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     );
-                                  } else if (snapshot.hasError) {
+                                  } else if (snapshot.hasError ||
+                                      product?.productName ==
+                                          "((product not found))") {
                                     return const Text(
                                       "Product not found",
                                       textAlign: TextAlign.center,
@@ -121,7 +129,21 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                                   ),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                if (product == null) return;
+                                if (product?.productName ==
+                                    "((product not found))") return;
+                                showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (BuildContext context) {
+                                    return ProductAbout(
+                                      productData: product!,
+                                    );
+                                  },
+                                );
+                              },
                               child: const FittedBox(
                                 child: Text(
                                   "about page",
