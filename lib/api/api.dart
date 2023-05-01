@@ -9,13 +9,13 @@ import 'package:openfoodfacts/utils/CountryHelper.dart';
 import 'package:openfoodfacts/utils/PnnsGroups.dart';
 
 /// request a product from the OpenFoodFacts database using BarCode
-/// 
+///
 /// Сникерс с лесным орехом: 5000159439480
 /// Липтон
 /// Монстр 5060639124275
-/// 
+///
 /// Возвращает ProductData или null
-/// 
+///
 Future<ProductData?> getProductByBarcode(String barCode) async {
   final ProductQueryConfiguration configuration = ProductQueryConfiguration(
     barCode,
@@ -58,7 +58,6 @@ Future<ProductData?> getProductByBarcode(String barCode) async {
   }
 }
 
-
 Future<List<ProductData>> getProducts() async {
   const productCategories = <PnnsGroup2>[
     PnnsGroup2.CHEESE,
@@ -79,20 +78,20 @@ Future<List<ProductData>> getProducts() async {
   return products;
 }
 
-
 /// request a list of products from the OpenFoodFacts database
 Future<List<ProductData>> getProductsByCategory(PnnsGroup2 filter) async {
   List<ProductData> list = [];
 
   ProductSearchQueryConfiguration configuration =
-      ProductSearchQueryConfiguration(parametersList: <Parameter>[
-    PnnsGroup2Filter(pnnsGroup2: filter),
-    const PageSize(size: 15),
+      ProductSearchQueryConfiguration(
+    parametersList: <Parameter>[
+      PnnsGroup2Filter(pnnsGroup2: filter),
+      const PageSize(size: 15),
     ],
     language: OpenFoodFactsLanguage.RUSSIAN,
     country: OpenFoodFactsCountry.RUSSIA,
-    fields: [ProductField.ALL], 
-    );
+    fields: [ProductField.ALL],
+  );
 
   SearchResult result = await OpenFoodAPIClient.searchProducts(
     null,

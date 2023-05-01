@@ -20,7 +20,7 @@ String getHumanReadableNutriment(String? key) {
     result += nutrimentKeyStringMap[parts[0]]!;
   }
   if (parts[1] == 'serving') {
-    result += ' (Serving)'; 
+    result += ' (Serving)';
   } else {
     result += ' (100g)';
   }
