@@ -1,7 +1,7 @@
 import 'package:fitmate/bloc/barcode/barcode_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:openfoodfacts/model/Product.dart';
+import 'package:fitmate/models/product_data.dart';
 
 class BarcodeScannerWidget extends StatefulWidget {
   const BarcodeScannerWidget({Key? key}) : super(key: key);
@@ -80,7 +80,7 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                           ),
                           const SizedBox(height: 15),
                           FittedBox(
-                            child: FutureBuilder<Product?>(
+                            child: FutureBuilder<ProductData?>(
                                 future: state.product,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {

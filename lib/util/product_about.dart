@@ -89,7 +89,7 @@ class ProductAbout extends StatelessWidget {
                     const SizedBox(height: 4),
                     for (NutrimentsData nutriment in productData.nutriments)
                       Text(
-                        '${nutriment.type}: ${nutriment.quantity}',
+                        '${getHumanReadableNutriment(nutriment.type)}: ${nutriment.quantity}',
                         style: const TextStyle(fontSize: 16),
                       ),
                   ],
