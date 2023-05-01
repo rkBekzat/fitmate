@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "864094111346",
+    "project_id": "fitmate-crashylist",
+    "storage_bucket": "fitmate-crashylist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864094111346:android:77f696a7ba565fc4aba4eb",
+        "android_client_info": {
+          "package_name": "com.example.fitmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "864094111346-125kuphv073cijuj5ei0r0h0qifojcdb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjrTbMkIGbhJaGO674hRiLFUlixY0fu5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "864094111346-125kuphv073cijuj5ei0r0h0qifojcdb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

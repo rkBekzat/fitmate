@@ -4,8 +4,18 @@ import 'package:fitmate/bloc/internet/internet_cubit.dart';
 import 'package:fitmate/screen/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
   runApp(const MyApp());
 }
 
