@@ -14,6 +14,8 @@ import 'package:openfoodfacts/utils/PnnsGroups.dart';
 /// Липтон
 /// Монстр 5060639124275
 /// 
+/// Возвращает ProductData или null
+/// 
 Future<ProductData?> getProductByBarcode(String barCode) async {
   final ProductQueryConfiguration configuration = ProductQueryConfiguration(
     barCode,
