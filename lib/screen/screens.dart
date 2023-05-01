@@ -1,3 +1,4 @@
+import 'package:fitmate/bloc/api/api_bloc.dart';
 import 'package:fitmate/bloc/search/search_bloc.dart';
 import 'package:fitmate/screen/scanner.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class Screens extends StatefulWidget {
 
 class _ScreensState extends State<Screens> {
   List<Widget> pages = [
-    const Home(),
+     Home(),
     // const about(),
     const BarcodeScannerWidget(),
   ];
@@ -32,41 +33,47 @@ class _ScreensState extends State<Screens> {
 
   @override
   Widget build(BuildContext context) {
+    final apiBloc = context.read<ApiBloc>();
     return Scaffold(
       appBar: AppBar(title: const Text("Fitmate"), actions: [
         index == 0
             ? Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BlocProvider<SearchBloc>(
-                                    create: (context) => SearchBloc(),
-                                    child: const SearchPage(),
-                                  )),
-                        );
-                      },
-                      icon: const Icon(Icons.search)),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const FilterPage()),
-                        );
-                      },
-                      // ignore: prefer_const_constructors
-                      icon: Icon(Icons.filter_alt_outlined)),
-                  const SizedBox(
-                    width: 20,
-                  )
-                ],
-              )
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            BlocProvider<SearchBloc>(
+                              create: (context) => SearchBloc(),
+                              child: const SearchPage(),
+                            )),
+                  );
+                },
+                icon: const Icon(Icons.search)),
+            const SizedBox(
+              width: 15,
+            ),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            BlocProvider.value(
+                            value: apiBloc,
+                              child: const FilterPage(),
+                            )),
+                  );
+                },
+                // ignore: prefer_const_constructors
+                icon: Icon(Icons.filter_alt_outlined)),
+            const SizedBox(
+              width: 20,
+            )
+          ],
+        )
             : Container()
       ]),
       body: pages.elementAt(index),

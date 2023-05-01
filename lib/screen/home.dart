@@ -29,47 +29,26 @@ class Home extends StatelessWidget {
             child: BlocBuilder<ApiBloc, ApiState>(
               builder: (context, state) {
                 if (state is ApiInitial) {
-                  late final products = state.products;
-                  return FutureBuilder<List<ProductData>>(
-                    future: products,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final futureProducts = snapshot.data!;
-                        return GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 10.0,
-                          ),
-                          itemCount: futureProducts.length,
-                          itemBuilder: (context, index) {
-                            final product = futureProducts[index];
-                            String image = product.productImage ?? "No image";
-                            String name = product.productName ?? "No name";
-
-                            return GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (BuildContext context) {
-                                    return ProductAbout(
-                                      productData: product,
-                                    );
-                                  },
-                                );
-                              },
-                              child: HomeItem(name: name, image: image),
-                            );
-                          },
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('${snapshot.error}');
-                      }
-                      return const CircularProgressIndicator();
-                    },
+                  return listProduct(state.products);
+                }
+                if(state is FilterApiStat){
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              final apiBloc = context.read<ApiBloc>();
+                              apiBloc.add(AllProductsApiEvent());
+                            },
+                            child: Row(
+                              children: [
+                                Text("Filter"),
+                                Icon(Icons.delete_forever),
+                              ],
+                            )),
+                        listProduct(state.products),
+                      ],
+                    ),
                   );
                 }
                 return const Center(child: Text('None'));
@@ -91,4 +70,50 @@ class Home extends StatelessWidget {
       },
     );
   }
+
+  Widget listProduct(Future<List<ProductData>> products){
+    return FutureBuilder<List<ProductData>>(
+      future: products,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final futureProducts = snapshot.data!;
+          return GridView.builder(
+            gridDelegate:
+            const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+            ),
+            shrinkWrap: true,
+            itemCount: futureProducts.length,
+            itemBuilder: (context, index) {
+              final product = futureProducts[index];
+              String image = product.productImage ?? "No image";
+              String name = product.productName ?? "No name";
+
+              return GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (BuildContext context) {
+                      return ProductAbout(
+                        productData: product,
+                      );
+                    },
+                  );
+                },
+                child: HomeItem(name: name, image: image),
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
 }
