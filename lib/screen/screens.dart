@@ -1,3 +1,4 @@
+import 'package:fitmate/bloc/api/api_bloc.dart';
 import 'package:fitmate/bloc/search/search_bloc.dart';
 import 'package:fitmate/screen/scanner.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,8 @@ class _ScreensState extends State<Screens> {
 
   @override
   Widget build(BuildContext context) {
+    final apiBloc = context.read<ApiBloc>();
+    final searchBloc = context.read<SearchBloc>();
     return Scaffold(
       appBar: AppBar(title: const Text("Fitmate"), actions: [
         index == 0
@@ -42,8 +45,8 @@ class _ScreensState extends State<Screens> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BlocProvider<SearchBloc>(
-                                    create: (context) => SearchBloc(),
+                              builder: (context) => BlocProvider.value(
+                                    value: searchBloc,
                                     child: const SearchPage(),
                                   )),
                         );
@@ -57,7 +60,10 @@ class _ScreensState extends State<Screens> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const FilterPage()),
+                              builder: (context) => BlocProvider.value(
+                                    value: apiBloc,
+                                    child: const FilterPage(),
+                                  )),
                         );
                       },
                       // ignore: prefer_const_constructors

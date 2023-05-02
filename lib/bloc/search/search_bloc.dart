@@ -11,7 +11,7 @@ part 'search_state.dart';
 
 bool same(String a, String b) {
   for (int i = 0; i < min(a.length, b.length); i++) {
-    if (a[i] != b[i]) {
+    if (a[i].toLowerCase() != b[i].toLowerCase()) {
       return false;
     }
   }
@@ -19,26 +19,29 @@ bool same(String a, String b) {
 }
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  SearchBloc() : super(SearchState(products: getProducts(), searched: [])) {
+  SearchBloc()
+      : super(
+            SearchState(products: constProducts, searched: Future(() => []))) {
     on<EmptySearchEvent>(_empty);
     on<SearchProductEvent>(_search);
   }
 
   _empty(EmptySearchEvent event, Emitter<SearchState> emit) {
-    emit(state.copyWith([]));
+    emit(state.copyWith(Future(() => [])));
   }
 
-  _search(SearchProductEvent event, Emitter<SearchState> emit) async {
-    List<ProductData> result = [];
-    final current = await state.products;
-    for (int i = 0; i < current.length; i++) {
-      if (current[i].productName == null) {
-        continue;
+  _search(SearchProductEvent event, Emitter<SearchState> emit) {
+    emit(state.copyWith(constProducts.then((value) {
+      List<ProductData> result = [];
+      for (int i = 0; i < value.length; i++) {
+        if (value[i].productName == null) {
+          continue;
+        }
+        if (same(value[i].productName!, event.name)) {
+          result.add(value[i]);
+        }
       }
-      if (same(current[i].productName!, event.name)) {
-        result.add(current[i]);
-      }
-    }
-    emit(state.copyWith(result));
+      return result;
+    })));
   }
 }
