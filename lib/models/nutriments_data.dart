@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fitmate/translations/locale_keys.g.dart';
-import 'package:flutter/material.dart';
 
 class NutrimentsData {
   NutrimentsData({
@@ -25,7 +24,7 @@ String getHumanReadableNutriment(String? key) {
     result += tr(translateKey);
   }
   if (parts[1] == 'serving') {
-    result += ' (${LocaleKeys.survey.tr()}})';
+    result += ' (${LocaleKeys.survey.tr()})';
   } else {
     result += ' (100${LocaleKeys.g.tr()})';
   }
