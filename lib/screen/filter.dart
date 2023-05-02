@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,17 +22,17 @@ class _FilterPageState extends State<FilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Filter"),
+        title: Text(LocaleKeys.filter.tr()),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Filtering"),
+            Text(LocaleKeys.filtering.tr()),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("Sugar"),
+                Text(LocaleKeys.sugar.tr()),
                 RangeSlider(
                     values: sugarValues,
                     min: 0,
@@ -45,7 +47,7 @@ class _FilterPageState extends State<FilterPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("Protein"),
+                Text(LocaleKeys.protein.tr()),
                 RangeSlider(
                     values: proteinValues,
                     min: 0,
@@ -54,13 +56,13 @@ class _FilterPageState extends State<FilterPage> {
                           proteinValues = value;
                         })),
                 Text(
-                    "${proteinValues.start.round()} - ${proteinValues.end.round()}  g")
+                    "${proteinValues.start.round()} - ${proteinValues.end.round()}  ${LocaleKeys.g.tr()}")
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("Fat"),
+                Text(LocaleKeys.fat.tr()),
                 RangeSlider(
                     values: fatValues,
                     min: 0,
@@ -68,13 +70,14 @@ class _FilterPageState extends State<FilterPage> {
                     onChanged: (value) => setState(() {
                           fatValues = value;
                         })),
-                Text("${fatValues.start.round()} - ${fatValues.end.round()}  g")
+                Text(
+                    "${fatValues.start.round()} - ${fatValues.end.round()}  ${LocaleKeys.g.tr()}")
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("carbohydrates"),
+                Text(LocaleKeys.carbohydrates.tr()),
                 RangeSlider(
                     values: carboValues,
                     min: 0,
@@ -83,7 +86,7 @@ class _FilterPageState extends State<FilterPage> {
                           carboValues = value;
                         })),
                 Text(
-                    "${carboValues.start.round()} - ${carboValues.end.round()}  g")
+                    "${carboValues.start.round()} - ${carboValues.end.round()}  ${LocaleKeys.g.tr()}")
               ],
             ),
             const SizedBox(
@@ -99,7 +102,7 @@ class _FilterPageState extends State<FilterPage> {
                       fatValues: fatValues));
                   Navigator.pop(context);
                 },
-                child: const Text("Done"))
+                child: Text(LocaleKeys.done.tr()))
           ],
         ),
       ),

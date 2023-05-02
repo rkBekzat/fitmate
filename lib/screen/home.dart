@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:fitmate/util/home_item.dart';
 import 'package:fitmate/util/product_about.dart';
 import 'package:fitmate/bloc/api/api_bloc.dart';
@@ -16,8 +18,8 @@ class Home extends StatelessWidget {
       listener: (context, state) {
         if (state is NotConnectedState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Internet not connected'),
+            SnackBar(
+              content: Text(LocaleKeys.no_internet.tr()),
               backgroundColor: Colors.red,
             ),
           );
@@ -43,9 +45,9 @@ class Home extends StatelessWidget {
                                 apiBloc.add(AllProductsApiEvent());
                               },
                               child: Row(
-                                children: const [
-                                  Text("Filter"),
-                                  Icon(Icons.delete_forever),
+                                children: [
+                                  Text(LocaleKeys.filter.tr()),
+                                  const Icon(Icons.delete_forever),
                                 ],
                               )),
                         ),
@@ -62,10 +64,10 @@ class Home extends StatelessWidget {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.network_check),
-                SizedBox(height: 10),
-                Text("Internet not connected"),
+              children: [
+                const Icon(Icons.network_check),
+                const SizedBox(height: 10),
+                Text(LocaleKeys.no_internet.tr()),
               ],
             ),
           );
@@ -93,8 +95,8 @@ class Home extends StatelessWidget {
             itemCount: futureProducts.length,
             itemBuilder: (context, index) {
               final product = futureProducts[index];
-              String image = product.productImage ?? "No image";
-              String name = product.productName ?? "No name";
+              String image = product.productImage ?? LocaleKeys.no_image.tr();
+              String name = product.productName ?? LocaleKeys.no_image.tr();
 
               return GestureDetector(
                 onTap: () {

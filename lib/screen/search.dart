@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fitmate/bloc/search/search_bloc.dart';
 import 'package:fitmate/models/product_data.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,7 +46,7 @@ class _SearchPageState extends State<SearchPage> {
                       searchBloc.add(EmptySearchEvent());
                     },
                   ),
-                  hintText: 'Search...',
+                  hintText: '${LocaleKeys.search.tr()}...',
                   border: InputBorder.none),
             ),
           ),
@@ -77,7 +79,7 @@ class _SearchPageState extends State<SearchPage> {
                           },
                         );
                       }
-                      return const Text("Data is null");
+                      return Text(LocaleKeys.null_data.tr());
                     });
               }
               return const CircularProgressIndicator();

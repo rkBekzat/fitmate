@@ -24,11 +24,10 @@ class HomeItem extends StatelessWidget {
                     placeholder: "assets/images/default_product.png",
                     image: image,
                     fit: BoxFit.contain,
-                    imageErrorBuilder: (context, object, stacktrace){
+                    imageErrorBuilder: (context, object, stacktrace) {
                       return Image.asset("assets/images/default_product.png");
                     },
-                  )
-              )),
+                  ))),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fitmate/bloc/api/api_bloc.dart';
 import 'package:fitmate/bloc/search/search_bloc.dart';
 import 'package:fitmate/screen/scanner.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:fitmate/screen/search.dart';
 import 'package:fitmate/screen/filter.dart';
@@ -41,6 +43,19 @@ class _ScreensState extends State<Screens> {
             ? Row(
                 children: [
                   IconButton(
+                    onPressed: () {
+                      if (context.locale == const Locale('ru')) {
+                        context.setLocale(const Locale('en'));
+                      } else {
+                        context.setLocale(const Locale('ru'));
+                      }
+                    },
+                    icon: const Icon(Icons.language),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -77,11 +92,13 @@ class _ScreensState extends State<Screens> {
       ]),
       body: pages.elementAt(index),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home_max_outlined), label: 'home'),
+              icon: const Icon(Icons.home_max_outlined),
+              label: LocaleKeys.home.tr()),
           BottomNavigationBarItem(
-              icon: Icon(Icons.camera_alt_outlined), label: 'scanner'),
+              icon: const Icon(Icons.camera_alt_outlined),
+              label: LocaleKeys.scanner.tr()),
         ],
         currentIndex: index,
         selectedItemColor: Colors.blue,
