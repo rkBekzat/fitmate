@@ -13,17 +13,17 @@ bool contain(RangeValues r, double v) {
 }
 
 class ApiBloc extends Bloc<ApiEvent, ApiState> {
-  ApiBloc() : super(ApiInitial(products: getProducts())) {
+  ApiBloc() : super(ApiInitial(products: constProducts)) {
     on<AllProductsApiEvent>(_getAll);
     on<FilterProductAPIEvent>(_filtering);
   }
 
   _getAll(AllProductsApiEvent event, Emitter<ApiState> emit) {
-    emit(ApiInitial(products: PRODUCTS));
+    emit(ApiInitial(products: constProducts));
   }
 
   _filtering(FilterProductAPIEvent event, Emitter<ApiState> emit) {
-    Future<List<ProductData>> filter = PRODUCTS.then((value) {
+    Future<List<ProductData>> filter = constProducts.then((value) {
       List<ProductData> results = [];
       for (int i = 0; i < value.length; i++) {
         bool okF = true, okS = true, okP = true, okC = true;

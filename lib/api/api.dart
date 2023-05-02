@@ -135,4 +135,4 @@ Future<List<ProductData>> getProductsByCategory(PnnsGroup2 filter) async {
   return list;
 }
 
-final PRODUCTS = getProducts();
+final constProducts = getProducts();

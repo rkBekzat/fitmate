@@ -19,7 +19,9 @@ bool same(String a, String b) {
 }
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  SearchBloc() : super(SearchState(products: PRODUCTS, searched: Future(() => []))) {
+  SearchBloc()
+      : super(
+            SearchState(products: constProducts, searched: Future(() => []))) {
     on<EmptySearchEvent>(_empty);
     on<SearchProductEvent>(_search);
   }
@@ -28,9 +30,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     emit(state.copyWith(Future(() => [])));
   }
 
-  _search(SearchProductEvent event, Emitter<SearchState> emit)  {
-
-    emit(state.copyWith(PRODUCTS.then((value) {
+  _search(SearchProductEvent event, Emitter<SearchState> emit) {
+    emit(state.copyWith(constProducts.then((value) {
       List<ProductData> result = [];
       for (int i = 0; i < value.length; i++) {
         if (value[i].productName == null) {

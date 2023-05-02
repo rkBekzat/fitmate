@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
               create: (context) => ApiBloc(),
             ),
             BlocProvider<SearchBloc>(
-                create: (context) => SearchBloc(),
+              create: (context) => SearchBloc(),
             ),
           ],
           child: const Screens(),
