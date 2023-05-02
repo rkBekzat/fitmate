@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class NutrimentsData {
   NutrimentsData({
     required this.type,
@@ -13,16 +16,17 @@ class NutrimentsData {
   }
 }
 
-String getHumanReadableNutriment(String? key) {
+String getHumanReadableNutriment(String? key, BuildContext context) {
   var parts = key?.split('_') ?? ['', ''];
   var result = '';
   if (nutrimentKeyStringMap.containsKey(parts[0])) {
-    result += nutrimentKeyStringMap[parts[0]]!;
+    var translateKey = parts[0].replaceAll('-', '_');
+    result += AppLocalizations.of(context)!.nutriment(translateKey);
   }
   if (parts[1] == 'serving') {
-    result += ' (Serving)';
+    result += ' (${AppLocalizations.of(context)?.survey})';
   } else {
-    result += ' (100g)';
+    result += ' (100${AppLocalizations.of(context)?.g})';
   }
   return result;
 }
