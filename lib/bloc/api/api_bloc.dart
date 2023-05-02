@@ -19,11 +19,11 @@ class ApiBloc extends Bloc<ApiEvent, ApiState> {
   }
 
   _getAll(AllProductsApiEvent event, Emitter<ApiState> emit) {
-    emit(ApiInitial(products: getProducts()));
+    emit(ApiInitial(products: PRODUCTS));
   }
 
   _filtering(FilterProductAPIEvent event, Emitter<ApiState> emit) {
-    Future<List<ProductData>> filter = getProducts().then((value) {
+    Future<List<ProductData>> filter = PRODUCTS.then((value) {
       List<ProductData> results = [];
       for (int i = 0; i < value.length; i++) {
         bool okF = true, okS = true, okP = true, okC = true;
