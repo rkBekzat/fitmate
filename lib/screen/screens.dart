@@ -34,6 +34,7 @@ class _ScreensState extends State<Screens> {
   @override
   Widget build(BuildContext context) {
     final apiBloc = context.read<ApiBloc>();
+    final searchBloc = context.read<SearchBloc>();
     return Scaffold(
       appBar: AppBar(title: const Text("Fitmate"), actions: [
         index == 0
@@ -44,8 +45,8 @@ class _ScreensState extends State<Screens> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BlocProvider<SearchBloc>(
-                                    create: (context) => SearchBloc(),
+                              builder: (context) => BlocProvider.value(
+                                    value: searchBloc,
                                     child: const SearchPage(),
                                   )),
                         );

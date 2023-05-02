@@ -5,6 +5,7 @@ import 'package:fitmate/screen/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'bloc/search/search_bloc.dart';
 import 'firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
@@ -47,6 +48,9 @@ class _MyAppState extends State<MyApp> {
             ),
             BlocProvider<ApiBloc>(
               create: (context) => ApiBloc(),
+            ),
+            BlocProvider<SearchBloc>(
+                create: (context) => SearchBloc(),
             ),
           ],
           child: const Screens(),
