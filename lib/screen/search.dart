@@ -1,4 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fitmate/bloc/search/search_bloc.dart';
+import 'package:fitmate/models/product_data.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,36 +46,45 @@ class _SearchPageState extends State<SearchPage> {
                       searchBloc.add(EmptySearchEvent());
                     },
                   ),
-                  hintText: 'Search...',
+                  hintText: '${LocaleKeys.search.tr()}...',
                   border: InputBorder.none),
             ),
           ),
         )),
         body: BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
           final products = state.searched;
-          return ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                if (product.productName != null) {
-                  return ListTile(
-                    title: Text(product.productName!),
-                    onTap: () {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        context: context,
-                        backgroundColor: Colors.transparent,
-                        builder: (BuildContext context) {
-                          return ProductAbout(
-                            productData: product,
-                          );
-                        },
-                      );
-                    },
-                  );
-                }
-                return const Text("Data is null");
-              });
+          return FutureBuilder<List<ProductData>>(
+            future: products,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final products = snapshot.data!;
+                return ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      if (product.productName != null) {
+                        return ListTile(
+                          title: Text(product.productName!),
+                          onTap: () {
+                            showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (BuildContext context) {
+                                return ProductAbout(
+                                  productData: product,
+                                );
+                              },
+                            );
+                          },
+                        );
+                      }
+                      return Text(LocaleKeys.null_data.tr());
+                    });
+              }
+              return const CircularProgressIndicator();
+            },
+          );
         }));
   }
 }

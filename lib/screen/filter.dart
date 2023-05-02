@@ -1,4 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/api/api_bloc.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -8,70 +13,26 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  int sortType = 0;
   RangeValues sugarValues = const RangeValues(0, 500);
   RangeValues proteinValues = const RangeValues(0, 500);
+  RangeValues carboValues = const RangeValues(0, 500);
+  RangeValues fatValues = const RangeValues(0, 500);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Filter"),
+        title: Text(LocaleKeys.filter.tr()),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Sorting"),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    sortType = 1;
-                    setState(() {});
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: sortType == 1 ? Colors.blue : Colors.grey,
-                  ),
-                  child: const Text("Relevent"),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    sortType = 2;
-                    setState(() {});
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: sortType == 2 ? Colors.blue : Colors.grey,
-                  ),
-                  child: const Text("Ascending order"),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    sortType = 3;
-                    setState(() {});
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: sortType == 3 ? Colors.blue : Colors.grey,
-                  ),
-                  child: const Text("descending order"),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text("Filtering"),
+            Text(LocaleKeys.filtering.tr()),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("Sugar"),
+                Text(LocaleKeys.sugar.tr()),
                 RangeSlider(
                     values: sugarValues,
                     min: 0,
@@ -84,9 +45,9 @@ class _FilterPageState extends State<FilterPage> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text("Protein"),
+                Text(LocaleKeys.protein.tr()),
                 RangeSlider(
                     values: proteinValues,
                     min: 0,
@@ -95,7 +56,37 @@ class _FilterPageState extends State<FilterPage> {
                           proteinValues = value;
                         })),
                 Text(
-                    "${proteinValues.start.round()} - ${proteinValues.end.round()}  g")
+                    "${proteinValues.start.round()} - ${proteinValues.end.round()}  ${LocaleKeys.g.tr()}")
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(LocaleKeys.fat.tr()),
+                RangeSlider(
+                    values: fatValues,
+                    min: 0,
+                    max: 1000,
+                    onChanged: (value) => setState(() {
+                          fatValues = value;
+                        })),
+                Text(
+                    "${fatValues.start.round()} - ${fatValues.end.round()}  ${LocaleKeys.g.tr()}")
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(LocaleKeys.carbohydrates.tr()),
+                RangeSlider(
+                    values: carboValues,
+                    min: 0,
+                    max: 1000,
+                    onChanged: (value) => setState(() {
+                          carboValues = value;
+                        })),
+                Text(
+                    "${carboValues.start.round()} - ${carboValues.end.round()}  ${LocaleKeys.g.tr()}")
               ],
             ),
             const SizedBox(
@@ -103,9 +94,15 @@ class _FilterPageState extends State<FilterPage> {
             ),
             ElevatedButton(
                 onPressed: () {
+                  final filterBloc = context.read<ApiBloc>();
+                  filterBloc.add(FilterProductAPIEvent(
+                      sugarValues: sugarValues,
+                      proteinValues: proteinValues,
+                      carboValues: carboValues,
+                      fatValues: fatValues));
                   Navigator.pop(context);
                 },
-                child: const Text("Done"))
+                child: Text(LocaleKeys.done.tr()))
           ],
         ),
       ),

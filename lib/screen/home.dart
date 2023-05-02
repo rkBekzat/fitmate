@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:fitmate/util/home_item.dart';
 import 'package:fitmate/util/product_about.dart';
 import 'package:fitmate/bloc/api/api_bloc.dart';
@@ -16,8 +18,8 @@ class Home extends StatelessWidget {
       listener: (context, state) {
         if (state is NotConnectedState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Internet not connected'),
+            SnackBar(
+              content: Text(LocaleKeys.no_internet.tr()),
               backgroundColor: Colors.red,
             ),
           );
@@ -29,47 +31,29 @@ class Home extends StatelessWidget {
             child: BlocBuilder<ApiBloc, ApiState>(
               builder: (context, state) {
                 if (state is ApiInitial) {
-                  late final products = state.products;
-                  return FutureBuilder<List<ProductData>>(
-                    future: products,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        final futureProducts = snapshot.data!;
-                        return GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 10.0,
-                          ),
-                          itemCount: futureProducts.length,
-                          itemBuilder: (context, index) {
-                            final product = futureProducts[index];
-                            String image = product.productImage ?? "No image";
-                            String name = product.productName ?? "No name";
-
-                            return GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  builder: (BuildContext context) {
-                                    return ProductAbout(
-                                      productData: product,
-                                    );
-                                  },
-                                );
+                  return listProduct(state.products, false);
+                }
+                if (state is FilterApiStat) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 90,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                final apiBloc = context.read<ApiBloc>();
+                                apiBloc.add(AllProductsApiEvent());
                               },
-                              child: HomeItem(name: name, image: image),
-                            );
-                          },
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('${snapshot.error}');
-                      }
-                      return const CircularProgressIndicator();
-                    },
+                              child: Row(
+                                children: [
+                                  Text(LocaleKeys.filter.tr()),
+                                  const Icon(Icons.delete_forever),
+                                ],
+                              )),
+                        ),
+                        listProduct(state.products, true),
+                      ],
+                    ),
                   );
                 }
                 return const Center(child: Text('None'));
@@ -80,14 +64,61 @@ class Home extends StatelessWidget {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(Icons.network_check),
-                SizedBox(height: 10),
-                Text("Internet not connected"),
+              children: [
+                const Icon(Icons.network_check),
+                const SizedBox(height: 10),
+                Text(LocaleKeys.no_internet.tr()),
               ],
             ),
           );
         }
+      },
+    );
+  }
+
+  Widget listProduct(Future<List<ProductData>> products, bool filter) {
+    return FutureBuilder<List<ProductData>>(
+      future: products,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final futureProducts = snapshot.data!;
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+            ),
+            physics: filter
+                ? const NeverScrollableScrollPhysics()
+                : const ScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: futureProducts.length,
+            itemBuilder: (context, index) {
+              final product = futureProducts[index];
+              String image = product.productImage ?? LocaleKeys.no_image.tr();
+              String name = product.productName ?? LocaleKeys.no_image.tr();
+
+              return GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    backgroundColor: Colors.transparent,
+                    builder: (BuildContext context) {
+                      return ProductAbout(
+                        productData: product,
+                      );
+                    },
+                  );
+                },
+                child: HomeItem(name: name, image: image),
+              );
+            },
+          );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+        return const CircularProgressIndicator();
       },
     );
   }

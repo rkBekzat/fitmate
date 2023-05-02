@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fitmate/bloc/barcode/barcode_bloc.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fitmate/models/product_data.dart';
@@ -48,11 +50,11 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                         ),
                       ),
                     ),
-                    child: const FittedBox(
+                    child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        'New Scan',
-                        style: TextStyle(fontSize: 100),
+                        LocaleKeys.new_scan.tr(),
+                        style: const TextStyle(fontSize: 100),
                       ),
                     ),
                   ),
@@ -91,7 +93,8 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                                       product?.productName !=
                                           "((product not found))") {
                                     return Text(
-                                      snapshot.data?.productName ?? "No name",
+                                      snapshot.data?.productName ??
+                                          LocaleKeys.no_name.tr(),
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
                                         fontSize: 200,
@@ -102,10 +105,10 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                                   } else if (snapshot.hasError ||
                                       product?.productName ==
                                           "((product not found))") {
-                                    return const Text(
-                                      "Product not found",
+                                    return Text(
+                                      LocaleKeys.no_product.tr(),
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 200,
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -144,11 +147,11 @@ class _BarcodeScannerState extends State<BarcodeScannerWidget> {
                                   },
                                 );
                               },
-                              child: const FittedBox(
+                              child: FittedBox(
                                 child: Text(
-                                  "about page",
+                                  LocaleKeys.about_page.tr(),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 200,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,

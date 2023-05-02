@@ -1,5 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NutrimentsData {
   NutrimentsData({
@@ -16,17 +17,17 @@ class NutrimentsData {
   }
 }
 
-String getHumanReadableNutriment(String? key, BuildContext context) {
+String getHumanReadableNutriment(String? key) {
   var parts = key?.split('_') ?? ['', ''];
   var result = '';
   if (nutrimentKeyStringMap.containsKey(parts[0])) {
     var translateKey = parts[0].replaceAll('-', '_');
-    result += AppLocalizations.of(context)!.nutriment(translateKey);
+    result += tr(translateKey);
   }
   if (parts[1] == 'serving') {
-    result += ' (${AppLocalizations.of(context)?.survey})';
+    result += ' (${LocaleKeys.survey.tr()}})';
   } else {
-    result += ' (100${AppLocalizations.of(context)?.g})';
+    result += ' (100${LocaleKeys.g.tr()})';
   }
   return result;
 }

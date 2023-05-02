@@ -9,3 +9,9 @@ class ApiInitial extends ApiState {
 
   ApiInitial({required this.products});
 }
+
+class FilterApiStat extends ApiState {
+  final Future<List<ProductData>> products;
+
+  FilterApiStat({required this.products});
+}
