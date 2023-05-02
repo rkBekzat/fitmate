@@ -20,7 +20,15 @@ class HomeItem extends StatelessWidget {
           Expanded(
               child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Image.network(image, fit: BoxFit.contain))),
+                  child: FadeInImage.assetNetwork(
+                    placeholder: "assets/images/default_product.png",
+                    image: image,
+                    fit: BoxFit.contain,
+                    imageErrorBuilder: (context, object, stacktrace){
+                      return Image.asset("assets/images/default_product.png");
+                    },
+                  )
+              )),
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
