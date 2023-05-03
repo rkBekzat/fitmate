@@ -10,8 +10,12 @@ import 'bloc/search/search_bloc.dart';
 import 'firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'api/api.dart';
+import 'package:get_it/get_it.dart';
 
 void main() async {
+  GetIt.instance.registerSingleton<ApiHelper>(ApiHelper());
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -5,8 +5,30 @@ import 'package:openfoodfacts/model/Nutriments.dart';
 import 'package:openfoodfacts/model/ProductResultV3.dart';
 import 'package:openfoodfacts/model/parameter/PnnsGroup2Filter.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:openfoodfacts/utils/AbstractQueryConfiguration.dart';
 import 'package:openfoodfacts/utils/CountryHelper.dart';
 import 'package:openfoodfacts/utils/PnnsGroups.dart';
+import 'package:openfoodfacts/utils/QueryType.dart';
+
+import 'package:get_it/get_it.dart';
+
+class ApiHelper {
+  Future<ProductResultV3> getProductV3(
+    ProductQueryConfiguration configuration, {
+    User? user,
+    QueryType? queryType,
+  }) async {
+    return await OpenFoodAPIClient.getProductV3(configuration);
+  }
+
+  Future<SearchResult> searchProducts(
+    final User? user,
+    final AbstractQueryConfiguration configuration, {
+    final QueryType? queryType,
+  }) async {
+    return await OpenFoodAPIClient.searchProducts(user, configuration);
+  }
+}
 
 /// request a product from the OpenFoodFacts database using BarCode
 ///
@@ -23,8 +45,9 @@ Future<ProductData?> getProductByBarcode(String barCode) async {
     fields: [ProductField.ALL],
     version: ProductQueryVersion.v3,
   );
-  final ProductResultV3 result =
-      await OpenFoodAPIClient.getProductV3(configuration);
+
+  final ApiHelper apiInstance = GetIt.instance<ApiHelper>();
+  final ProductResultV3 result = await apiInstance.getProductV3(configuration);
 
   if (result.status == ProductResultV3.statusSuccess) {
     var product = result.product;
@@ -98,7 +121,8 @@ Future<List<ProductData>> getProductsByCategory(PnnsGroup2 filter) async {
     fields: [ProductField.ALL],
   );
 
-  SearchResult result = await OpenFoodAPIClient.searchProducts(
+  final ApiHelper apiInstance = GetIt.instance<ApiHelper>();
+  SearchResult result = await apiInstance.searchProducts(
     null,
     configuration,
   );
