@@ -21,7 +21,6 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeCubit themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
     return Scaffold(
         appBar: AppBar(
             // The search area here
