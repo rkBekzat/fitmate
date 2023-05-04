@@ -30,6 +30,7 @@ class _SearchPageState extends State<SearchPage> {
               color: Colors.white, borderRadius: BorderRadius.circular(5)),
           child: Center(
             child: TextField(
+              style: const TextStyle(color: Colors.black),
               controller: _searchController,
               onChanged: (value) {
                 final searchBloc = context.read<SearchBloc>();
