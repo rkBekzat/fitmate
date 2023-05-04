@@ -5,7 +5,6 @@ import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/theme/theme_cubit.dart';
 import '../util/product_about.dart';
 
 class SearchPage extends StatefulWidget {
