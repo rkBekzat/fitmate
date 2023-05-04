@@ -6,7 +6,8 @@ import 'package:fitmate/translations/codegen_loader.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'bloc/search/search_bloc.dart';
+import 'package:fitmate/bloc/search/search_bloc.dart';
+import 'package:fitmate/bloc/theme/theme_cubit.dart';
 import 'firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -26,53 +27,53 @@ void main() async {
   await EasyLocalization.ensureInitialized();
 
   runApp(
-    EasyLocalization(
-        supportedLocales: const [Locale('en'), Locale('ru')],
-        path:
-            'assets/translations', // <-- change the path of the translation files
-        fallbackLocale: const Locale('en', 'US'),
-        assetLoader: const CodegenLoader(),
-        child: const MyApp()),
-  );
+      MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeCubit>(
+            create: (_) => ThemeCubit(),
+          ),
+          BlocProvider<InternetCubit>(
+            create: (_) => InternetCubit(),
+          ),
+          BlocProvider<BarcodeBloc>(
+            create: (context) => BarcodeBloc(),
+          ),
+          BlocProvider<ApiBloc>(
+            create: (context) => ApiBloc(),
+          ),
+          BlocProvider<SearchBloc>(
+            create: (context) => SearchBloc(),
+          ),
+        ],
+        child: EasyLocalization(
+            supportedLocales: const [Locale('en'), Locale('ru')],
+            path: 'assets/translations',
+            fallbackLocale: const Locale('en', 'US'),
+            assetLoader: const CodegenLoader(),
+            child: const MyApp()),
+  ));
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
 
   @override
   Widget build(BuildContext context) {
+    ThemeCubit theme = BlocProvider.of<ThemeCubit>(context, listen:true);
     return MaterialApp(
         title: 'Fitmate',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: theme.isDark ? ThemeData.dark() : ThemeData.light(),
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider<InternetCubit>(
-              create: (_) => InternetCubit(),
-            ),
-            BlocProvider<BarcodeBloc>(
-              create: (context) => BarcodeBloc(),
-            ),
-            BlocProvider<ApiBloc>(
-              create: (context) => ApiBloc(),
-            ),
-            BlocProvider<SearchBloc>(
-              create: (context) => SearchBloc(),
-            ),
-          ],
-          child: const Screens(),
-        ));
+        home: const Screens());
   }
 }

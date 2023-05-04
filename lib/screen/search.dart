@@ -5,6 +5,7 @@ import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/theme/theme_cubit.dart';
 import '../util/product_about.dart';
 
 class SearchPage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeCubit themeCubit = BlocProvider.of<ThemeCubit>(context, listen:true);
     return Scaffold(
         appBar: AppBar(
             // The search area here
@@ -30,6 +32,8 @@ class _SearchPageState extends State<SearchPage> {
               color: Colors.white, borderRadius: BorderRadius.circular(5)),
           child: Center(
             child: TextField(
+              style: const TextStyle(
+                  color: Colors.black),
               controller: _searchController,
               onChanged: (value) {
                 final searchBloc = context.read<SearchBloc>();

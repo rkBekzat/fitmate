@@ -3,6 +3,7 @@ import 'package:fitmate/bloc/api/api_bloc.dart';
 import 'package:fitmate/bloc/search/search_bloc.dart';
 import 'package:fitmate/screen/scanner.dart';
 import 'package:fitmate/translations/locale_keys.g.dart';
+import 'package:fitmate/util/theme_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fitmate/screen/search.dart';
 import 'package:fitmate/screen/filter.dart';
@@ -42,6 +43,10 @@ class _ScreensState extends State<Screens> {
         index == 0
             ? Row(
                 children: [
+                  const ThemeButton(),
+
+                  const SizedBox(width: 15),
+
                   IconButton(
                     onPressed: () {
                       if (context.locale == const Locale('ru')) {
