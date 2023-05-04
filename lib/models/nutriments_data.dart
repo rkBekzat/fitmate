@@ -31,6 +31,27 @@ String getHumanReadableNutriment(String? key) {
   return result;
 }
 
+bool canBuildPieChart(List<NutrimentsData> list) {
+  for (NutrimentsData i in list) {
+    if (i.type?.contains('energy-kj') == true) continue;
+    if (i.type?.contains('energy-kcal') == true) continue;
+    if (i.type?.contains('100g') == true) return true;
+  }
+  return false;
+}
+
+Map<String, double> buildPieChart(List<NutrimentsData> list) {
+  Map<String, double> res = {};
+  for (NutrimentsData i in list) {
+    if (i.type?.contains('energy-kj') == true) continue;
+    if (i.type?.contains('energy-kcal') == true) continue;
+    if (i.type?.contains('100g') == true) {
+      res[getHumanReadableNutriment(i.type)] = double.parse(i.quantity ?? '');
+    }
+  }
+  return res;
+}
+
 const nutrimentKeyStringMap = {
   'salt': 'Salt',
   'fiber': 'Fiber',

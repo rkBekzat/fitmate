@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fitmate/models/product_data.dart';
 import 'package:fitmate/translations/locale_keys.g.dart';
 import 'package:flutter/material.dart';
-
+import 'package:pie_chart/pie_chart.dart';
 import '../models/nutriments_data.dart';
 
 class ProductAbout extends StatefulWidget {
@@ -41,31 +41,41 @@ class _ProductAboutState extends State<ProductAbout> {
 
   Widget buildNutriments(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (NutrimentsData nutriment in widget.productData.nutriments)
-            if (double.parse(nutriment.quantity ?? "0") != 0.0)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    getHumanReadableNutriment(nutriment.type),
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  const Divider(
-                    thickness: 1,
-                  ),
-                  Text(
-                    '${nutriment.quantity}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ],
-              ),
-        ],
-      ),
-    );
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (NutrimentsData nutriment in widget.productData.nutriments)
+                  if (double.parse(nutriment.quantity ?? "0") != 0.0)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          getHumanReadableNutriment(nutriment.type),
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        Text(
+                          '${nutriment.quantity}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+              ],
+            ),
+            if (canBuildPieChart(widget.productData.nutriments))
+              PieChart(
+                dataMap: buildPieChart(widget.productData.nutriments),
+                animationDuration: const Duration(milliseconds: 800),
+                chartLegendSpacing: 32,
+                chartRadius: MediaQuery.of(context).size.width / 3.2,
+              )
+          ],
+        ));
   }
 
   @override
