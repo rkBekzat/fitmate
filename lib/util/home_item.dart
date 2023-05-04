@@ -29,11 +29,10 @@ class HomeItem extends StatelessWidget {
                     image: image,
                     fit: BoxFit.contain,
                     imageErrorBuilder: (context, object, stacktrace) {
-                      return Image.asset(
-                          "assets/images/default_product.png",
+                      return Image.asset("assets/images/default_product.png",
                           fit: BoxFit.contain,
-                          color: themeCubit.isDark ? Colors.white : Colors.black
-                      );
+                          color:
+                              themeCubit.isDark ? Colors.white : Colors.black);
                     },
                   ))),
           const SizedBox(height: 10),

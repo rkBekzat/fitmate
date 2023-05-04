@@ -9,7 +9,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   bool _isDark = false;
   bool get isDark => _isDark;
 
-  void changeTheme(){
+  void changeTheme() {
     _isDark = !_isDark;
 
     emit(ThemeChanged());

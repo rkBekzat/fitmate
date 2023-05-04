@@ -44,9 +44,7 @@ class _ScreensState extends State<Screens> {
             ? Row(
                 children: [
                   const ThemeButton(),
-
                   const SizedBox(width: 15),
-
                   IconButton(
                     onPressed: () {
                       if (context.locale == const Locale('ru')) {

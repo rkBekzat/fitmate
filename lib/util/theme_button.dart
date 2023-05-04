@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,14 +13,13 @@ class ThemeButton extends StatefulWidget {
 class _ThemeButtonState extends State<ThemeButton> {
   @override
   Widget build(BuildContext context) {
-    ThemeCubit themeCubit = BlocProvider.of<ThemeCubit>(context, listen:true);
+    ThemeCubit themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
     return IconButton(
-        onPressed: (){
+        onPressed: () {
           setState(() {
             themeCubit.changeTheme();
           });
         },
-        icon: Icon(themeCubit.isDark ? Icons.wb_sunny : Icons.brightness_2)
-    );
+        icon: Icon(themeCubit.isDark ? Icons.wb_sunny : Icons.brightness_2));
   }
 }

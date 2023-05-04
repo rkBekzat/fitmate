@@ -9,7 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fitmate/bloc/theme/theme_cubit.dart';
 import 'package:fitmate/models/nutriments_data.dart';
 
-
 class ProductAbout extends StatefulWidget {
   const ProductAbout({super.key, required this.productData});
 
@@ -91,7 +90,9 @@ class _ProductAboutState extends State<ProductAbout> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.85,
       decoration: BoxDecoration(
-        color: themeCubit.isDark ? const Color.fromRGBO(66, 66, 66, 1): Colors.white,
+        color: themeCubit.isDark
+            ? const Color.fromRGBO(66, 66, 66, 1)
+            : Colors.white,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(25.0),
           topRight: Radius.circular(25.0),
@@ -110,12 +111,10 @@ class _ProductAboutState extends State<ProductAbout> {
                 fit: BoxFit.contain,
                 height: 200,
                 imageErrorBuilder: (context, object, stacktrace) {
-                  return Image.asset(
-                    "assets/images/default_product.png",
-                    fit: BoxFit.contain,
-                    height: 200,
-                    color: themeCubit.isDark ? Colors.white : Colors.black
-                  );
+                  return Image.asset("assets/images/default_product.png",
+                      fit: BoxFit.contain,
+                      height: 200,
+                      color: themeCubit.isDark ? Colors.white : Colors.black);
                 },
               )),
               const SizedBox(height: 16),
@@ -130,8 +129,10 @@ class _ProductAboutState extends State<ProductAbout> {
                   return ToggleButtons(
                       isSelected: [_showIngredients, !_showIngredients],
                       fillColor: themeCubit.isDark ? Colors.white : Colors.blue,
-                      selectedBorderColor: themeCubit.isDark ? Colors.white : Colors.blue,
-                      selectedColor: themeCubit.isDark ? Colors.black : Colors.white,
+                      selectedBorderColor:
+                          themeCubit.isDark ? Colors.white : Colors.blue,
+                      selectedColor:
+                          themeCubit.isDark ? Colors.black : Colors.white,
                       onPressed: _toggleButton,
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       constraints: BoxConstraints.expand(

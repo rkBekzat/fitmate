@@ -21,7 +21,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeCubit themeCubit = BlocProvider.of<ThemeCubit>(context, listen:true);
+    ThemeCubit themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true);
     return Scaffold(
         appBar: AppBar(
             // The search area here
@@ -32,8 +32,7 @@ class _SearchPageState extends State<SearchPage> {
               color: Colors.white, borderRadius: BorderRadius.circular(5)),
           child: Center(
             child: TextField(
-              style: const TextStyle(
-                  color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               controller: _searchController,
               onChanged: (value) {
                 final searchBloc = context.read<SearchBloc>();

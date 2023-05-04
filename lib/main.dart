@@ -26,47 +26,44 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
-  runApp(
-      MultiBlocProvider(
-        providers: [
-          BlocProvider<ThemeCubit>(
-            create: (_) => ThemeCubit(),
-          ),
-          BlocProvider<InternetCubit>(
-            create: (_) => InternetCubit(),
-          ),
-          BlocProvider<BarcodeBloc>(
-            create: (context) => BarcodeBloc(),
-          ),
-          BlocProvider<ApiBloc>(
-            create: (context) => ApiBloc(),
-          ),
-          BlocProvider<SearchBloc>(
-            create: (context) => SearchBloc(),
-          ),
-        ],
-        child: EasyLocalization(
-            supportedLocales: const [Locale('en'), Locale('ru')],
-            path: 'assets/translations',
-            fallbackLocale: const Locale('en', 'US'),
-            assetLoader: const CodegenLoader(),
-            child: const MyApp()),
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider<ThemeCubit>(
+        create: (_) => ThemeCubit(),
+      ),
+      BlocProvider<InternetCubit>(
+        create: (_) => InternetCubit(),
+      ),
+      BlocProvider<BarcodeBloc>(
+        create: (context) => BarcodeBloc(),
+      ),
+      BlocProvider<ApiBloc>(
+        create: (context) => ApiBloc(),
+      ),
+      BlocProvider<SearchBloc>(
+        create: (context) => SearchBloc(),
+      ),
+    ],
+    child: EasyLocalization(
+        supportedLocales: const [Locale('en'), Locale('ru')],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('en', 'US'),
+        assetLoader: const CodegenLoader(),
+        child: const MyApp()),
   ));
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
-    ThemeCubit theme = BlocProvider.of<ThemeCubit>(context, listen:true);
+    ThemeCubit theme = BlocProvider.of<ThemeCubit>(context, listen: true);
     return MaterialApp(
         title: 'Fitmate',
         debugShowCheckedModeBanner: false,
