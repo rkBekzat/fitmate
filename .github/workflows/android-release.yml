@@ -37,6 +37,9 @@ jobs:
       - name: Run unit tests
         run: flutter test test/unit/*.dart
 
+      - name: Run widget tests
+        run: flutter test test/*.dart
+
       - name: Build release
         run: flutter build apk --release
 
