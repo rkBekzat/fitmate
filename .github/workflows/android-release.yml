@@ -34,8 +34,8 @@ jobs:
       - name: Linter checks
         run: flutter analyze
  
-      # - name: Run unit tests
-        # run: TODO  
+      - name: Run unit tests
+        run: flutter test test/unit/*.dart
 
       - name: Build release
         run: flutter build apk --release
